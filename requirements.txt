@@ -1,5 +1,22 @@
-pandas
-sqlalchemy
-pyyaml
-tabulate
-streamlit
+nlp-sql-demo/
+│
+├── main.py # Entry point for Streamlit UI
+├── config.yaml # Configurations (DB path, model settings)
+├── requirements.txt # Python dependencies
+├── README.md # Setup & run guide
+│
+├── data/
+│ └── test_dataset.csv # Test dataset for evaluation
+│
+├── db/
+│ └── rental_app.db # SQLite sample database
+│
+├── scripts/
+│ ├── init_db.py # Script to create & populate rental_app.db
+│ └── evaluate.py # Script to run test set & calculate accuracy
+│
+├── models/
+│ └── nlp_to_sql.py # NLP → SQL conversion logic
+│
+└── report/
+└── evaluation_report.md
