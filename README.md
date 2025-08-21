@@ -30,9 +30,6 @@ nlp-sql-demo/
 └── report/
 └── evaluation_report.md # Accuracy results & test set methodology
 
-yaml
-Copy
-Edit
 
 ---
 
@@ -42,30 +39,23 @@ Clone the repository:
 ```bash
 git clone https://github.com/<your-username>/nlp-sql-demo.git
 cd nlp-sql-demo
+
 Create a virtual environment and install dependencies:
 
-bash
-Copy
-Edit
 python -m venv venv
 source venv/bin/activate   # Linux/Mac
 venv\Scripts\activate      # Windows
 
 pip install -r requirements.txt
+
 Initialize the database:
 
-bash
-Copy
-Edit
 python scripts/init_db.py
 This creates db/rental_app.db with sample tables (properties, tenants, rentals) and inserts example data.
 
 🚀 Running the Application
 Start the Streamlit app:
 
-bash
-Copy
-Edit
 streamlit run main.py
 This opens a browser interface where you can type queries such as:
 
@@ -80,9 +70,6 @@ If the system cannot map the query to SQL, it returns the fallback response.
 🧪 Testing & Evaluation
 Run automated evaluation on the included test dataset:
 
-bash
-Copy
-Edit
 python scripts/evaluate.py
 This script:
 
