@@ -1,0 +1,22 @@
+[
+  {
+    "question": "Who are the top 10 tenants by total rent paid?",
+    "gold_sql": "SELECT py.tenant_id, SUM(py.amount) AS total_rent FROM payments py WHERE py.status = 'successful' GROUP BY py.tenant_id ORDER BY total_rent DESC LIMIT 10;"
+  },
+  {
+    "question": "What’s the average rating of apartments vs houses?",
+    "gold_sql": "SELECT p.property_type, ROUND(AVG(r.rating), 2) AS avg_rating FROM reviews r JOIN properties p ON p.property_id = r.property_id WHERE p.property_type IN ('apartment','house') GROUP BY p.property_type ORDER BY p.property_type;"
+  },
+  {
+    "question": "Which landlords generated the most revenue in 2024?",
+    "gold_sql": "SELECT (u.first_name || ' ' || u.last_name) AS landlord, ROUND(SUM(py.amount), 2) AS revenue FROM payments py JOIN bookings b ON b.booking_id = py.booking_id JOIN properties p ON p.property_id = b.property_id JOIN users u ON u.user_id = p.landlord_id WHERE py.status = 'successful' AND strftime('%Y', py.payment_date) = '2024' GROUP BY landlord ORDER BY revenue DESC;"
+  },
+  {
+    "question": "List all currently available 2BHKs under $2500 in London.",
+    "gold_sql": "SELECT p.title, p.city, p.bedrooms, p.rent_price, p.status FROM properties p WHERE p.status='available' AND p.bedrooms=2 AND p.city = 'London' AND p.rent_price < 2500 ORDER BY p.rent_price ASC;"
+  },
+  {
+    "question": "What’s the occupancy rate of properties in Bradford in Q2 2024?",
+    "gold_sql": "WITH city_props AS (SELECT property_id FROM properties WHERE city = 'Bradford'), quarter_bookings AS (SELECT b.property_id, MAX(date(b.start_date, 'start of day')) AS s, MAX(date(b.end_date, 'start of day')) AS e FROM bookings b JOIN city_props cp ON cp.property_id = b.property_id WHERE NOT (b.end_date < date('2024-04-01') OR b.start_date > date('2024-06-30')) AND b.status IN ('confirmed','completed') GROUP BY b.booking_id), span AS (SELECT COUNT(*) AS prop_count FROM city_props), booked_days AS (SELECT SUM(JULIANDAY(CASE WHEN e > date('2024-06-30') THEN date('2024-06-30') ELSE e END) - JULIANDAY(CASE WHEN s < date('2024-04-01') THEN date('2024-04-01') ELSE s END) + 1) AS booked FROM quarter_bookings), denom AS (SELECT prop_count * (JULIANDAY('2024-06-30') - JULIANDAY('2024-04-01') + 1) AS total_days FROM span) SELECT 'Bradford' AS city, 'Q2 2024' AS period, ROUND(100.0 * COALESCE(b.booked,0) / NULLIF(d.total_days,0), 2) AS occupancy_rate_percent FROM booked_days b, denom d;"
+  }
+]
