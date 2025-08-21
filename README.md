@@ -1,4 +1,4 @@
-# 🏠 NLP-to-SQL Demo for Rental App Database
+# NLP-to-SQL Demo for Rental App Database
 
 This repository contains a Proof of Concept (POC) system that allows a CXO to type queries in natural language (English). The system converts these queries into SQL, executes them on a sample `rental_app` database, and returns results in a clear format. If the query cannot be answered, the system gracefully responds with:  
 **“Sorry, unable to answer at this point in time.”**
@@ -51,12 +51,17 @@ pip install -r requirements.txt
 Initialize the database:
 
 python scripts/init_db.py
+
+
 This creates db/rental_app.db with sample tables (properties, tenants, rentals) and inserts example data.
 
 🚀 Running the Application
+
 Start the Streamlit app:
 
 streamlit run main.py
+
+
 This opens a browser interface where you can type queries such as:
 
 “What’s the occupancy rate of properties in Bradford last quarter?”
@@ -68,9 +73,11 @@ This opens a browser interface where you can type queries such as:
 If the system cannot map the query to SQL, it returns the fallback response.
 
 🧪 Testing & Evaluation
+
 Run automated evaluation on the included test dataset:
 
 python scripts/evaluate.py
+
 This script:
 
 Loads natural language test queries (data/test_dataset.csv).
