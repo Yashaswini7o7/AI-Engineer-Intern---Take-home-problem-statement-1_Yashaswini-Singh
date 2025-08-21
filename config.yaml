@@ -1,1 +1,14 @@
 
+```yaml
+# General configuration for the POC
+database:
+  url: sqlite:///rental_app.db   # created by scripts/init_db.py
+
+app:
+  max_rows: 100                  # cap rows shown in UI
+  show_sql: true                 # reveal generated SQL in UI for transparency
+
+parser:
+  mode: rule_based               # (future) could be 'llm', 'hybrid'
+  currency_symbols: ["$", "£", "€"]  # stripped during parsing
+
